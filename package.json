@@ -4,7 +4,6 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "node src/server.js",
     "start": "node src/server.js"
   },
   "repository": {
