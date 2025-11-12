@@ -11,12 +11,12 @@ export const getAllNotes = async (req, res) => {
 
   const skip = (page - 1) * perPage;
 
-  const notesQuery = await Note.find();
+  const notesQuery = Note.find();
 
   if (search) {
     notesQuery.where({
-	    $text: { $search: search }
-	  });
+      $text: { $search: search }
+    });
   }
 
   if (tag) {
@@ -32,13 +32,13 @@ export const getAllNotes = async (req, res) => {
 
   const totalPages = Math.ceil(totalItems / perPage);
 
-  res.status(200).json(
+  res.status(200).json({
     page,
     perPage,
     totalItems,
     totalPages,
     notes,
-  );
+  });
 };
 
 export const getNoteById = async (req, res, next) => {

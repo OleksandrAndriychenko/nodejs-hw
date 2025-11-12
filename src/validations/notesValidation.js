@@ -10,14 +10,14 @@ export const getAllNotesSchema = {
   [Segments.QUERY]: Joi.object({
     page: Joi.number().integer().min(1).default(1),
     perPage: Joi.number().integer().min(5).max(20).default(10),
-    tag: Joi.string().valid(...TAGS),
+    tag: Joi.string().optional().valid(...TAGS),
     search: Joi.string().trim().allow(''),
   }),
 };
 
 export const noteIdSchema = {
   [Segments.PARAMS]: Joi.object({
-    studentId: Joi.string().custom(objectIdValidator).required(),
+    noteId: Joi.string().custom(objectIdValidator).required(),
   }),
 };
 
@@ -28,16 +28,16 @@ export const createNoteSchema = {
       "string.min": "title should have at least {#limit} characters",
       "any.required": "title is required",
     }),
-    content: Joi.string().messages({
+    content: Joi.string().allow('').messages({
       "string.base": "content must be a string",
     }),
-    tag: Joi.string().valid(...TAGS).messages({
+    tag: Joi.string().valid(...TAGS).optional().messages({
       "any.only": `tag must be one of: ${TAGS}`,
     }),
   }),
 };
 
-export const updateStudentSchema = {
+export const updateNoteSchema = {
   [Segments.PARAMS]: Joi.object({
     noteId: Joi.string().custom(objectIdValidator).required(),
   }),
@@ -46,7 +46,7 @@ export const updateStudentSchema = {
       "string.base": "title must be a string",
       "string.min": "title should have at least {#limit} characters",
     }),
-    content: Joi.string().messages({
+    content: Joi.string().allow('').messages({
       "string.base": "content must be a string",
     }),
     tag: Joi.string().valid(...TAGS).messages({
